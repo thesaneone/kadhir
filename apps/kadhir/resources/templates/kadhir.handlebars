@@ -1,9 +1,17 @@
 <h1>Kadhir</h1>
 {{#view Kadhir.CreateTaskView}}
-<input id="new-todo" type="text"
-       placeholder="What needs to be done?" >
+    <input id="new-todo" type="text" placeholder="What needs to be done?" >
 {{/view}}
 
-{{#collection SC.TemplateCollectionView contentBinding="Kadhir.taskListController"}}
-  {{content.title}}
+{{#view Kadhir.StatsView id="stats"}}
+    {{#view SC.Button classBinding="isActive" target="Kadhir.taskListController" action="clearCompletedTodos"}}
+        Clear Completed Todos
+    {{/view}}
+    {{displayRemaining}} remaining.
+{{/view}}
+
+{{view SC.Checkbox class="mark-all-done" title="Mark All as Done" valueBinding="Kadhir.taskListController.allAreDone"}}
+
+{{#collection SC.TemplateCollectionView contentBinding="Kadhir.taskListController" itemClassBinding="content.isDone"}}
+    {{view Kadhir.MarkDoneView}}
 {{/collection}}
